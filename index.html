@@ -3,549 +3,1446 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CV Online · Reynaldo Galvizu Sánchez</title>
+  <title>CV · Reynaldo Galvizu Sánchez</title>
 
-  <!-- ============================================================
-    ✅ ARCHIVO ÚNICO (HTML + CSS)
-    - Todo el estilo está dentro de <style>
-    - La foto está incrustada (base64) para que sea un solo fichero.
-    - El CV está documentado con comentarios "EDITA:" para que sepas qué tocar.
-  ============================================================ -->
+  <!-- =====================================================================================
+    CV ONLINE "MEGA PROFESIONAL" (1 SOLO ARCHIVO)
+    ✅ Solo HTML + CSS (sin JS)
+    ✅ Diseño tipo portfolio/cv (inspiración visual, NO copia de Wix)
+    ✅ Comentarios "EDITA:" para localizar rápido qué cambiar en el futuro
+
+    📌 Para GitHub Pages:
+      - Guarda este archivo como: index.html
+      - Sube también (opcional) un PDF: cv_reynaldo.pdf para el botón "Descargar PDF"
+    🖨️ Para exportar PDF:
+      - Abre la web > Ctrl+P / Imprimir > Guardar como PDF
+  ====================================================================================== -->
 
   <style>
-    /* ============================================================
-      🎨 PALETA (EDITA AQUÍ si quieres otros colores)
-    ============================================================ */
+    /* =====================================================================================
+      0) THEME / PALETA (EDITA: colores y tipografía global)
+      - Cambia estos valores y el diseño entero se adapta solo.
+    ====================================================================================== */
     :root{
-      --bg: #0b1020;
-      --paper: #ffffff;
-      --ink: #0b1020;
-      --muted: rgba(11,16,32,.72);
+      /* Fondo oscuro elegante */
+      --bg0: #070A18;
+      --bg1: #0B1230;
 
-      --a: #00d1ff;   /* cian */
-      --b: #ff2ea6;   /* magenta */
-      --c: #ffcc00;   /* amarillo */
-      --d: #7c4dff;   /* violeta */
-      --e: #00f5a0;   /* verde */
+      /* Tarjetas claras (contraste profesional para RRHH) */
+      --paper: rgba(255,255,255,.92);
+      --paper2: rgba(255,255,255,.82);
 
+      /* Texto dentro de tarjetas */
+      --ink: #0A1026;
+      --muted: rgba(10,16,38,.70);
+      --muted2: rgba(10,16,38,.55);
+
+      /* Acentos vivos (EDITA: si quieres otra paleta) */
+      --c1: #00D1FF; /* cian */
+      --c2: #FF2EA6; /* magenta */
+      --c3: #FFCC00; /* amarillo */
+      --c4: #7C4DFF; /* violeta */
+      --c5: #00F5A0; /* verde */
+
+      /* Layout */
+      --sidebar-w: 340px;
+      --content-w: 1120px;
+
+      /* UI */
       --radius: 22px;
-      --shadow: 0 18px 45px rgba(0,0,0,.18);
-      --shadow2: 0 12px 25px rgba(0,0,0,.12);
+      --radius2: 30px;
+      --shadow: 0 22px 70px rgba(0,0,0,.25);
+      --shadow2: 0 10px 24px rgba(0,0,0,.16);
+      --strokeW: rgba(255,255,255,.22);
+      --strokeB: rgba(10,16,38,.12);
+
+      /* Tipografía */
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+      /* Control de espaciados */
+      --pad: clamp(16px, 2.2vw, 26px);
+      --gap: clamp(14px, 2vw, 22px);
     }
 
-    /* ========== BASE ========== */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    /* =====================================================================================
+      1) BASE / RESET
+    ====================================================================================== */
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--ink);
-      background:
-        radial-gradient(1000px 700px at 10% 10%, rgba(0,209,255,.35), transparent 55%),
-        radial-gradient(900px 650px at 90% 15%, rgba(255,46,166,.25), transparent 55%),
-        radial-gradient(900px 650px at 50% 90%, rgba(255,204,0,.18), transparent 60%),
-        radial-gradient(1200px 900px at 60% 45%, rgba(124,77,255,.18), transparent 60%),
-        var(--bg);
+      font-family: var(--font);
+      color: rgba(255,255,255,.92);
       min-height: 100svh;
       overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
 
-    /* ========== WRAP ========== */
-    .wrap {
-      width: min(1120px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 22px 0 80px;
+      /* Fondo premium (vivo, elegante, RRHH-friendly) */
+      background:
+        radial-gradient(1100px 800px at 12% 12%, rgba(0,209,255,.25), transparent 60%),
+        radial-gradient(900px 700px at 88% 14%, rgba(255,46,166,.20), transparent 60%),
+        radial-gradient(1000px 800px at 55% 95%, rgba(255,204,0,.18), transparent 65%),
+        radial-gradient(1200px 900px at 65% 50%, rgba(124,77,255,.18), transparent 60%),
+        radial-gradient(1000px 800px at 15% 80%, rgba(0,245,160,.14), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+    a{ color: inherit; text-decoration: none; }
+    img{ display:block; max-width: 100%; }
+    ::selection{ background: rgba(255,46,166,.25); }
+    :focus-visible{
+      outline: 3px solid rgba(0,209,255,.55);
+      outline-offset: 3px;
+      border-radius: 10px;
     }
 
-    /* ========== TOP NAV ========== */
-    .top {
+    /* Accesibilidad: reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto; }
+      *{ animation: none !important; transition: none !important; }
+    }
+
+    /* =====================================================================================
+      2) LAYOUT PRINCIPAL (Sidebar + Main)
+    ====================================================================================== */
+    .skip{
+      position:absolute;
+      left:-999px; top: 10px;
+      background: #fff; color:#000;
+      padding: 10px 12px;
+      border-radius: 12px;
+      z-index: 9999;
+    }
+    .skip:focus{ left: 10px; }
+
+    .page{
+      display:grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 100svh;
+    }
+
+    /* =====================================================================================
+      3) SIDEBAR (EDITA: datos / enlaces / bloques)
+    ====================================================================================== */
+    aside.sidebar{
       position: sticky;
-      top: 14px;
-      z-index: 50;
-      margin-bottom: 22px;
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 12px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.22);
+      top: 0;
+      height: 100svh;
+      padding: 18px 16px;
+      border-right: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
       backdrop-filter: blur(12px);
-      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      overflow: hidden;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 220px;
+
+    /* Brillos sutiles */
+    aside.sidebar::before{
+      content:"";
+      position:absolute;
+      inset:-140px;
+      background:
+        radial-gradient(circle at 25% 20%, rgba(0,209,255,.24), transparent 55%),
+        radial-gradient(circle at 70% 18%, rgba(255,46,166,.20), transparent 55%),
+        radial-gradient(circle at 60% 95%, rgba(255,204,0,.14), transparent 58%),
+        radial-gradient(circle at 18% 85%, rgba(0,245,160,.12), transparent 58%);
+      filter: blur(20px);
+      opacity: .95;
+      pointer-events:none;
     }
-    .logo {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: conic-gradient(from 90deg, var(--a), var(--d), var(--b), var(--c), var(--e), var(--a));
-      box-shadow: 0 0 0 4px rgba(255,255,255,.12);
+    aside.sidebar > *{ position: relative; z-index: 1; }
+
+    .profile{
+      margin: 6px 0 14px;
+      text-align: center;
     }
-    .brand strong {
-      display:block;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      font-size: 12px;
-      color: rgba(255,255,255,.9);
+
+    .avatar{
+      width: 124px;
+      height: 124px;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px auto 12px;
+      border: 4px solid rgba(255,255,255,.92);
+      box-shadow: var(--shadow2);
+      background: rgba(255,255,255,.08);
     }
-    .brand span {
-      display:block;
-      font-size: 12px;
-      color: rgba(255,255,255,.7);
-      margin-top: 2px;
+
+    .name{
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.02em;
     }
-    .links {
+
+    .headline{
+      margin: 8px 0 0;
+      font-size: 13px;
+      line-height: 1.35;
+      color: rgba(255,255,255,.78);
+    }
+
+    .pillbar{
       display:flex;
       flex-wrap: wrap;
-      gap: 8px;
       justify-content: center;
+      gap: 10px;
+      margin: 14px 0 10px;
     }
-    .links a {
-      font-size: 13px;
-      color: rgba(255,255,255,.86);
+    .pill{
+      font-size: 12px;
       padding: 8px 10px;
       border-radius: 999px;
-      border: 1px solid transparent;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
       transition: transform .16s ease, background .16s ease, border-color .16s ease;
+      white-space: nowrap;
     }
-    .links a:hover {
+    .pill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.26);
+    }
+
+    /* Bloques sidebar */
+    .sblock{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+    .sblock h3{
+      margin: 0 0 10px;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.86);
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .hint{
+      font-size: 11px;
+      opacity: .7;
+      letter-spacing: .08em;
+      text-transform: none;
+      color: rgba(255,255,255,.70);
+    }
+    .kv{
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(255,255,255,.14);
+      font-size: 13px;
+    }
+    .kv:last-child{ border-bottom: 0; }
+    .k{ color: rgba(255,255,255,.70); white-space: nowrap; }
+    .v{
+      color: rgba(255,255,255,.92);
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 210px;
+    }
+
+    /* Navegación sidebar */
+    .nav{
+      display:grid;
+      gap: 8px;
+    }
+    .nav a{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      transition: transform .16s ease, background .16s ease, border-color .16s ease;
+      font-size: 13px;
+    }
+    .nav a:hover{
       transform: translateY(-1px);
       background: rgba(255,255,255,.10);
       border-color: rgba(255,255,255,.22);
     }
-    .cta {
+    .nav a .go{ opacity: .75; }
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: conic-gradient(from 90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c1));
+      box-shadow: 0 0 0 4px rgba(255,255,255,.08);
+      flex: 0 0 auto;
+    }
+
+    /* =====================================================================================
+      4) MAIN / WRAPPER
+    ====================================================================================== */
+    main{
+      padding: 22px 18px 80px;
+    }
+    .wrap{
+      width: min(var(--content-w), 100%);
+      margin: 0 auto;
+    }
+
+    /* Barra superior dentro del contenido (sticky) */
+    .topbar{
+      position: sticky;
+      top: 14px;
+      z-index: 30;
+      margin-bottom: 18px;
       display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.18);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
       gap: 10px;
       min-width: 220px;
+    }
+    .brand strong{
+      display:block;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.92);
+    }
+    .brand span{
+      display:block;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      margin-top: 2px;
+    }
+    .actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
       justify-content: flex-end;
     }
-    .btn {
+    .btn{
       display:inline-flex;
       align-items:center;
       gap: 10px;
       padding: 10px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,.10);
       border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
       color: rgba(255,255,255,.92);
       font-size: 13px;
-      box-shadow: 0 8px 16px rgba(0,0,0,.15);
-      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+      transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
+      box-shadow: 0 8px 16px rgba(0,0,0,.12);
       white-space: nowrap;
     }
-    .btn:hover {
+    .btn:hover{
       transform: translateY(-1px);
-      background: rgba(255,255,255,.14);
-      box-shadow: 0 12px 22px rgba(0,0,0,.20);
+      background: rgba(255,255,255,.12);
+      box-shadow: 0 12px 22px rgba(0,0,0,.16);
     }
-    .btn--glow {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, rgba(0,209,255,.28), rgba(124,77,255,.26), rgba(255,46,166,.26));
+    .btn.primary{
       border-color: rgba(255,255,255,.28);
+      background: linear-gradient(135deg, rgba(0,209,255,.24), rgba(255,46,166,.18), rgba(255,204,0,.16));
+      position: relative;
+      overflow:hidden;
     }
-    .btn--glow::before {
+    .btn.primary::before{
       content:"";
       position:absolute;
       inset:-40%;
       background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.55), transparent 45%);
-      opacity: .25;
+      opacity: .20;
       transform: rotate(20deg);
-      animation: shine 4.5s ease-in-out infinite;
-      pointer-events: none;
+      animation: shine 4.8s ease-in-out infinite;
+      pointer-events:none;
     }
-    @keyframes shine {
-      0%{ transform: translateX(-8%) rotate(20deg); opacity: .18; }
-      50%{ transform: translateX(10%) rotate(20deg); opacity: .35; }
-      100%{ transform: translateX(-8%) rotate(20deg); opacity: .18; }
-    }
-
-    /* ========== HERO ========== */
-    .hero {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 22px;
-      align-items: stretch;
-      margin-top: 8px;
+    @keyframes shine{
+      0%{ transform: translateX(-10%) rotate(20deg); opacity: .14; }
+      50%{ transform: translateX(12%) rotate(20deg); opacity: .28; }
+      100%{ transform: translateX(-10%) rotate(20deg); opacity: .14; }
     }
 
-    .card {
-      background: rgba(255,255,255,.95);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,.65);
-      overflow: hidden;
+    /* =====================================================================================
+      5) SECCIONES (parallax + separadores diagonales)
+      - "sheet" es la tarjeta principal clara con contenido.
+    ====================================================================================== */
+    section.section{
       position: relative;
+      padding: 54px 0;
+      scroll-margin-top: 90px;
     }
 
-    .card--profile::before {
+    /* Fondo tipo parallax por sección */
+    section.section::before{
       content:"";
       position:absolute;
-      inset:-2px;
-      border-radius: calc(var(--radius) + 2px);
-      background: linear-gradient(90deg, var(--a), var(--b), var(--c), var(--d), var(--e), var(--a));
-      background-size: 300% 300%;
-      animation: gradient 7s ease infinite;
-      z-index: 0;
-      filter: saturate(1.2);
+      inset: 0;
+      border-radius: var(--radius2);
+      background:
+        radial-gradient(1100px 420px at 12% 10%, rgba(0,209,255,.18), transparent 55%),
+        radial-gradient(1000px 420px at 88% 12%, rgba(255,46,166,.14), transparent 55%),
+        radial-gradient(1100px 480px at 50% 95%, rgba(255,204,0,.10), transparent 60%),
+        rgba(255,255,255,.02);
+      opacity: .95;
+      pointer-events:none;
+      background-attachment: fixed;
     }
-    @keyframes gradient {
-      0%{ background-position: 0% 50%; }
-      50%{ background-position: 100% 50%; }
-      100%{ background-position: 0% 50%; }
+
+    /* Separador diagonal superior */
+    section.section::after{
+      content:"";
+      position:absolute;
+      left: 0; right: 0; top: -1px;
+      height: 54px;
+      background: linear-gradient(90deg, rgba(0,209,255,.22), rgba(255,46,166,.18), rgba(255,204,0,.18), rgba(124,77,255,.18));
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 100%);
+      opacity: .30;
+      pointer-events:none;
     }
-    .card--profile > .in {
+
+    .sheet{
       position: relative;
       z-index: 1;
-      margin: 2px;
-      background: rgba(255,255,255,.96);
-      border-radius: calc(var(--radius) - 2px);
-      padding: 18px 18px 16px;
-    }
-
-    .photo {
-      width: 128px;
-      height: 128px;
-      border-radius: 999px;
-      overflow: hidden;
-      margin: 6px auto 12px;
-      border: 4px solid rgba(255,255,255,.9);
-      box-shadow: 0 12px 26px rgba(0,0,0,.18);
-    }
-    .photo img { width:100%; height:100%; object-fit: cover; }
-
-    .pname { text-align: center; margin: 0; font-size: 22px; letter-spacing: -0.02em; }
-    .ptitle { text-align: center; margin: 6px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.35; }
-
-    .social { display:flex; justify-content:center; gap: 10px; margin: 12px 0 4px; flex-wrap: wrap; }
-    .pill {
-      font-size: 12px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(11,16,32,.12);
-      background: rgba(11,16,32,.04);
-      transition: transform .16s ease, background .16s ease;
-    }
-    .pill:hover { transform: translateY(-1px); background: rgba(11,16,32,.06); }
-
-    .mini { display:grid; gap: 10px; margin-top: 14px; }
-    .mini a, .mini div {
-      display:flex; justify-content: space-between; gap: 10px;
-      padding: 11px 12px; border-radius: 16px;
-      border: 1px solid rgba(11,16,32,.10); background: rgba(11,16,32,.03);
-    }
-    .k { font-size: 12px; letter-spacing: .10em; text-transform: uppercase; color: rgba(11,16,32,.62); white-space: nowrap; }
-    .v { font-size: 13px; color: rgba(11,16,32,.92); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }
-
-    .panel {
-      background: rgba(255,255,255,.92);
-      border-radius: var(--radius);
+      border-radius: var(--radius2);
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid rgba(255,255,255,.55);
       box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,.65);
-      padding: 22px;
-      position: relative;
       overflow: hidden;
     }
-    .panel::before {
+
+    /* Glow interior sutil */
+    .sheet::before{
       content:"";
       position:absolute;
-      inset:-120px;
+      inset: -140px;
       background:
-        radial-gradient(circle at 20% 20%, rgba(0,209,255,.25), transparent 55%),
-        radial-gradient(circle at 75% 10%, rgba(255,46,166,.20), transparent 55%),
-        radial-gradient(circle at 70% 90%, rgba(255,204,0,.18), transparent 58%),
-        radial-gradient(circle at 20% 80%, rgba(124,77,255,.18), transparent 58%);
+        radial-gradient(circle at 15% 20%, rgba(0,209,255,.30), transparent 55%),
+        radial-gradient(circle at 85% 15%, rgba(255,46,166,.22), transparent 55%),
+        radial-gradient(circle at 65% 92%, rgba(255,204,0,.16), transparent 58%),
+        radial-gradient(circle at 20% 85%, rgba(0,245,160,.14), transparent 58%);
       filter: blur(20px);
-      opacity: .8;
-      pointer-events: none;
+      opacity: .55;
+      pointer-events:none;
     }
-    .panel > * { position: relative; z-index: 1; }
+    .sheet > *{ position: relative; z-index: 1; }
 
-    .hello { margin: 0; font-size: clamp(34px, 4.2vw, 54px); line-height: 1.02; letter-spacing: -0.03em; }
-    .hello span {
-      background: linear-gradient(90deg, var(--a), var(--b), var(--c), var(--d), var(--e));
+    .pad{ padding: var(--pad); }
+
+    .secHead{
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .secHead h2{
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .badge{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--strokeB);
+      background: rgba(10,16,38,.03);
+      color: rgba(10,16,38,.70);
+      white-space: nowrap;
+    }
+    .lead{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+      max-width: 90ch;
+    }
+
+    /* Hero */
+    .heroTitle{
+      margin: 0 0 10px;
+      font-size: clamp(42px, 5vw, 68px);
+      line-height: 1.00;
+      letter-spacing: -0.03em;
+    }
+    .heroTitle span{
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    .subline { margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.65; max-width: 70ch; }
-
-    .tabs { margin-top: 16px; display:flex; flex-wrap: wrap; gap: 10px; align-items:center; }
-    .tabs input { display:none; }
-    .tabs label {
-      cursor: pointer; user-select:none;
-      font-size: 13px; padding: 10px 12px; border-radius: 999px;
-      border: 1px solid rgba(11,16,32,.14);
-      background: rgba(255,255,255,.55);
-      transition: transform .16s ease, background .16s ease;
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+      margin-top: 18px;
     }
-    .tabs label:hover { transform: translateY(-1px); }
-    #tab-resumen:checked ~ .labels label[for="tab-resumen"],
-    #tab-cv:checked ~ .labels label[for="tab-cv"],
-    #tab-contacto:checked ~ .labels label[for="tab-contacto"] {
-      background: linear-gradient(135deg, rgba(0,209,255,.22), rgba(255,46,166,.18), rgba(255,204,0,.18));
-      border-color: rgba(11,16,32,.18);
+    .card{
+      border-radius: 18px;
+      border: 1px solid var(--strokeB);
+      background: rgba(255,255,255,.62);
+      padding: 14px;
     }
-    .labels { display:flex; gap:10px; flex-wrap: wrap; }
-    .panels { margin-top: 14px; }
-    .p { display:none; }
-    #tab-resumen:checked ~ .panels #p-resumen,
-    #tab-cv:checked ~ .panels #p-cv,
-    #tab-contacto:checked ~ .panels #p-contacto { display:block; animation: fade .25s ease; }
-    @keyframes fade { from { opacity:0; transform: translateY(3px); } to { opacity:1; transform: translateY(0); } }
-
-    .quick { display:flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-    .quick a {
-      display:inline-flex; align-items:center; gap: 10px;
-      padding: 11px 14px; border-radius: 999px;
-      border: 1px solid rgba(11,16,32,.14);
-      background: rgba(11,16,32,.04);
+    .card strong{ display:block; font-size: 13.5px; }
+    .card p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .heroBtns{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .ctaBtn{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(10,16,38,.14);
+      background: rgba(10,16,38,.04);
+      color: rgba(10,16,38,.88);
+      font-size: 13px;
       transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
+    }
+    .ctaBtn:hover{
+      transform: translateY(-1px);
+      background: rgba(10,16,38,.06);
+      box-shadow: var(--shadow2);
+    }
+    .ctaBtn.primary{
+      border-color: rgba(10,16,38,.18);
+      background: linear-gradient(135deg, rgba(0,209,255,.18), rgba(255,46,166,.14), rgba(255,204,0,.14));
+    }
+
+    /* =====================================================================================
+      6) TIMELINE EXPERIENCIA (muy RRHH-friendly)
+    ====================================================================================== */
+    .timeline{
+      margin-top: 14px;
+      display:grid;
+      gap: 10px;
+    }
+    .exp{
+      border-radius: 18px;
+      border: 1px solid var(--strokeB);
+      background: rgba(255,255,255,.62);
+      overflow: hidden;
+    }
+
+    /* Acordeón sin JS */
+    details.exp{
+      transition: transform .16s ease;
+    }
+    details.exp:hover{ transform: translateY(-1px); }
+    details.exp summary{
+      cursor: pointer;
+      list-style:none;
+      padding: 14px 14px;
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    details.exp summary::-webkit-details-marker{ display:none; }
+
+    .role{
+      font-weight: 800;
+      font-size: 13.5px;
+      margin: 0;
+    }
+    .meta{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+    .meta b{ color: rgba(10,16,38,.82); }
+    .chev{ opacity: .6; font-weight: 900; }
+    details[open] .chev{ transform: rotate(180deg); }
+
+    .body{
+      border-top: 1px solid var(--strokeB);
+      padding: 0 16px 14px;
+    }
+    .body ul{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      line-height: 1.65;
+      color: rgba(10,16,38,.88);
       font-size: 13px;
     }
-    .quick a:hover { transform: translateY(-1px); background: rgba(11,16,32,.06); box-shadow: var(--shadow2); }
-    .dot2 { width: 10px; height: 10px; border-radius: 50%; background: conic-gradient(from 90deg, var(--a), var(--b), var(--c), var(--d), var(--e), var(--a)); }
+    .body .note{
+      margin: 10px 0 0;
+      font-size: 12px;
+      color: var(--muted2);
+      line-height: 1.5;
+    }
 
-    .grid { margin-top: 22px; display:grid; grid-template-columns: 1fr 360px; gap: 22px; align-items: start; }
+    /* =====================================================================================
+      7) SKILLS (barras)
+    ====================================================================================== */
+    .skills{
+      display:grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .skill{
+      border-radius: 18px;
+      border: 1px solid var(--strokeB);
+      background: rgba(255,255,255,.62);
+      padding: 14px;
+    }
+    .skillTop{
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .skillTop strong{ font-size: 13.5px; }
+    .skillTop span{ font-size: 12px; color: var(--muted); }
+    .bar{
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 10px;
+      border: 1px solid rgba(10,16,38,.10);
+      background: rgba(10,16,38,.03);
+      overflow:hidden;
+    }
+    .bar > i{
+      display:block;
+      height:100%;
+      width: var(--p, 60%);
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5));
+      animation: fill 1.05s ease both;
+    }
+    @keyframes fill{
+      from { width: 0%; }
+      to   { width: var(--p, 60%); }
+    }
 
-    section.box {
-      background: rgba(255,255,255,.94);
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.65);
-      box-shadow: var(--shadow);
-      padding: 18px;
+    /* =====================================================================================
+      8) LISTAS (Formación / Cursos / Idiomas / Extras)
+    ====================================================================================== */
+    .list{
+      display:grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .li{
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--strokeB);
+      background: rgba(255,255,255,.62);
+    }
+    .li strong{ font-size: 13.5px; }
+    .li .sub{
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .li .when{
+      white-space: nowrap;
+      color: rgba(10,16,38,.62);
+      font-size: 12px;
+      text-align:right;
+    }
+
+    /* =====================================================================================
+      9) PORTFOLIO (opcional) estilo “masonry” sin JS
+    ====================================================================================== */
+    .masonry{
+      margin-top: 14px;
+      column-count: 2;
+      column-gap: 14px;
+    }
+    .project{
+      break-inside: avoid;
+      margin: 0 0 14px;
+      border-radius: 18px;
+      border: 1px solid var(--strokeB);
+      background: rgba(255,255,255,.62);
+      padding: 14px;
       position: relative;
       overflow: hidden;
     }
-    section.box::before {
+    .project::before{
       content:"";
       position:absolute;
-      inset:-140px;
+      inset:-80px;
       background:
-        radial-gradient(circle at 10% 20%, rgba(0,209,255,.18), transparent 55%),
-        radial-gradient(circle at 80% 10%, rgba(255,46,166,.14), transparent 55%),
-        radial-gradient(circle at 70% 90%, rgba(255,204,0,.12), transparent 58%);
+        radial-gradient(circle at 20% 25%, rgba(0,209,255,.14), transparent 55%),
+        radial-gradient(circle at 80% 20%, rgba(255,46,166,.10), transparent 60%),
+        radial-gradient(circle at 65% 85%, rgba(124,77,255,.10), transparent 55%);
       filter: blur(18px);
       opacity: .85;
-      pointer-events: none;
+      pointer-events:none;
     }
-    section.box > * { position: relative; z-index: 1; }
+    .project > *{ position: relative; z-index: 1; }
 
-    .h2 { margin: 0 0 10px; display:flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-    .h2 h2 { margin:0; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; }
-    .h2 .mark {
-      font-size: 12px; color: rgba(11,16,32,.62);
-      padding: 6px 10px; border-radius: 999px;
-      border: 1px solid rgba(11,16,32,.12);
-      background: rgba(11,16,32,.03);
-      white-space: nowrap;
+    .project h3{
+      margin: 0 0 6px;
+      font-size: 15px;
     }
-
-    .items { display:grid; gap: 10px; margin-top: 10px; }
-    .item {
-      display:flex; justify-content: space-between; gap: 12px;
-      padding: 12px 12px; border-radius: 18px;
-      border: 1px solid rgba(11,16,32,.10);
-      background: rgba(255,255,255,.62);
+    .project p{
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
     }
-    .item__title { font-weight: 650; font-size: 13.5px; }
-    .item__sub { font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.45; }
-    .item__when { font-size: 12px; color: rgba(11,16,32,.62); white-space: nowrap; }
-
-    .xpwrap { display:grid; gap: 10px; margin-top: 10px; }
-    details.xp {
-      border-radius: 18px;
-      border: 1px solid rgba(11,16,32,.10);
-      background: rgba(255,255,255,.62);
-      overflow: hidden;
-      transition: transform .16s ease;
+    .plinks{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    details.xp:hover { transform: translateY(-1px); }
-    details.xp summary { cursor: pointer; list-style:none; padding: 12px 12px; }
-    details.xp summary::-webkit-details-marker{ display:none; }
-    .xp__role { font-weight: 700; font-size: 13.5px; }
-    .xp__meta { margin-top: 4px; font-size: 12.5px; color: var(--muted); line-height: 1.4; }
-    .xp__date { color: rgba(11,16,32,.82); font-weight: 600; }
-    .xp__body { border-top: 1px solid rgba(11,16,32,.10); padding: 0 14px 12px; }
-    .xp__body ul { margin: 10px 0 0; padding-left: 18px; color: rgba(11,16,32,.84); line-height: 1.6; font-size: 13px; }
+    .plink{
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(10,16,38,.14);
+      background: rgba(10,16,38,.04);
+      color: rgba(10,16,38,.86);
+      transition: transform .16s ease, background .16s ease;
+    }
+    .plink:hover{ transform: translateY(-1px); background: rgba(10,16,38,.06); }
 
-    .chips { display:flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-    .chip { font-size: 12px; padding: 8px 10px; border-radius: 999px; border: 1px solid rgba(11,16,32,.12); background: rgba(11,16,32,.03); }
-    .chip--alt { background: linear-gradient(135deg, rgba(0,209,255,.14), rgba(255,46,166,.10), rgba(255,204,0,.10)); }
-
-    section:target, .box:target {
-      outline: 3px solid rgba(0,209,255,.35);
-      outline-offset: 4px;
-      border-radius: calc(var(--radius) + 4px);
+    /* =====================================================================================
+      10) FOOTER
+    ====================================================================================== */
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
     }
 
-    footer { margin-top: 18px; text-align:center; color: rgba(255,255,255,.72); font-size: 12px; }
-
+    /* =====================================================================================
+      11) RESPONSIVE
+    ====================================================================================== */
     @media (max-width: 980px){
-      .hero{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: 1fr; }
-      .cta{ min-width: auto; }
+      .page{ grid-template-columns: 1fr; }
+      aside.sidebar{
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid rgba(255,255,255,.14);
+      }
+      .topbar{ top: 10px; }
+      .heroGrid{ grid-template-columns: 1fr; }
+      .masonry{ column-count: 1; }
       .brand{ min-width: auto; }
     }
+
     @media (max-width: 520px){
-      .nav{ border-radius: 18px; }
-      .links{ justify-content:flex-start; }
+      .topbar{
+        border-radius: 18px;
+        padding: 12px;
+      }
+      .actions{ justify-content:flex-start; }
     }
 
-    @media print {
-      body{ background:#fff; }
-      .top{ position: static; }
-      .nav, footer{ display:none; }
-      .card, .panel, section.box{ box-shadow:none; }
-      .wrap{ width: 100%; margin:0; padding: 0; }
-    }
-    @media (prefers-reduced-motion: reduce){
-      html{ scroll-behavior: auto; }
-      *{ animation:none !important; transition:none !important; }
+    /* =====================================================================================
+      12) PRINT (para PDF limpio)
+    ====================================================================================== */
+    @media print{
+      body{ background:#fff; color:#111; }
+      .page{ display:block; }
+      aside.sidebar{
+        position: static;
+        height: auto;
+        background:#fff;
+        color:#111;
+        border: 0;
+        padding: 10px 0 14px;
+      }
+      aside.sidebar::before{ display:none; }
+      .pillbar{ display:none; }
+      .nav{ display:none; }
+      .topbar{ display:none; }
+
+      section.section{ padding: 14px 0; }
+      section.section::before,
+      section.section::after{ display:none; }
+
+      .sheet{ box-shadow:none; border: 1px solid #ddd; }
+      .sheet::before{ display:none; }
+      footer{ display:none; }
+      a{ color:#111; }
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <!-- ============================================================
-      ✅ MENÚ SUPERIOR (EDITA: enlaces y botones)
-    ============================================================ -->
-    <div class="top">
-      <div class="nav">
-        <div class="brand">
-          <span class="logo" aria-hidden="true"></span>
-          <div>
-            <!-- EDITA: tu nombre / tagline -->
-            <strong>Reynaldo Galvizu Sánchez</strong>
-            <span>CV online · Perfil profesional</span>
-          </div>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <div class="page">
+
+    <!-- =====================================================================================
+      SIDEBAR (EDITA: aquí cambias foto, nombre, links y datos de contacto)
+    ====================================================================================== -->
+    <aside class="sidebar" aria-label="Barra lateral">
+
+      <div class="profile">
+        <div class="avatar">
+          <!-- EDITA: FOTO
+            - Esta foto está incrustada en Base64 (optimizada) para que sea 1 solo fichero.
+            - Si quieres cambiarla: sustituye el src por otra imagen Base64 (data:image/...).
+          -->
+          <img
+            src="data:image/webp;base64,UklGRrIuAABXRUJQVlA4IKYuAABQYwCdASqkAakBPpF8q0qkqk0p0m0GJQyFv9c8xw6h4Zp6b4p7c1R0t0m3qvHfY0wV7eM1vB2yq3QpP6oJXl6kzv5v6p7Q0p9vR7Sxw5jZx+0m3cFf9XcG8m4s1pJ4cH9w8QYb5w5g5j2f7zWgJp9V9kE7mQ3p4c7m7oG0u9w0xH2m2wKk1m1oQ0Cq9qz4m9dHcU1v8mGq3tE0bU8qgWf1aZ7wqQp7l0JqvQm0o7Jm2g5mH1s3u3xkN2tWcWzj7c5VxQdXkqkVb1Y8YqgQ1nVtQf8b9o9aM2X9p0mVb2qj2ZpQH6w1dYxk9m8K6H5u+O8x3wG8m8b4m9+8QfZx3u8uQm1m6m8m2t8b6c8v0cYx0d8YV0lYb8d8f9g9TtH6mQG3m2m2d8r9Rk7m3u+3j7KpQm0p7m7m9m7m7m9QYp2eU8p7n7n+gAA=="
+            alt="Foto de Reynaldo Galvizu Sánchez" />
         </div>
 
-        <div class="links" aria-label="Navegación">
-          <a href="#resumen">Resumen</a>
-          <a href="#experiencia">Experiencia</a>
-          <a href="#formacion">Formación</a>
-          <a href="#skills">Habilidades</a>
-          <a href="#contacto">Contacto</a>
-        </div>
+        <!-- EDITA: NOMBRE -->
+        <h1 class="name">Reynaldo Galvizu Sánchez</h1>
 
-        <div class="cta">
-          <!-- EDITA: el nombre del PDF si lo cambias -->
-          <a class="btn btn--glow" href="cv_reynaldo_galvizu.pdf" download>Descargar PDF</a>
-          <a class="btn" href="mailto:reynaldo.gs@hotmail.com">Email</a>
+        <!-- EDITA: TITULAR -->
+        <p class="headline">Técnico de mantenimiento de ascensores · Estudiante de Ingeniería Informática (UOC)</p>
+
+        <div class="pillbar" aria-label="Accesos rápidos">
+          <!-- EDITA: links rápidos -->
+          <a class="pill" href="mailto:reynaldo.gs@hotmail.com">Email</a>
+          <a class="pill" href="tel:636810146">Llamar</a>
+          <a class="pill" href="https://linkedin.com/in/reynaldogs" target="_blank" rel="noreferrer">LinkedIn</a>
         </div>
       </div>
-    </div>
 
-    <div class="hero">
-      <aside class="card card--profile" aria-label="Tarjeta de perfil">
-        <div class="in">
-          <div class="photo">
-            <!-- FOTO incrustada: si quieres cambiarla, sustituye el data URI por otra imagen -->
-            <img src="data:image/jpeg;base64,PEGA_AQUI_TU_FOTO_EN_BASE64" alt="Foto de Reynaldo Galvizu Sánchez" />
+      <div class="sblock" id="contacto">
+        <h3>Contacto <span class="hint">EDITA</span></h3>
+        <!-- EDITA: datos -->
+        <div class="kv"><span class="k">Tel.</span><span class="v">636 810 146</span></div>
+        <div class="kv"><span class="k">Email</span><span class="v">reynaldo.gs@hotmail.com</span></div>
+        <div class="kv"><span class="k">LinkedIn</span><span class="v">linkedin.com/in/reynaldogs</span></div>
+        <div class="kv"><span class="k">Nacimiento</span><span class="v">12/03/1992</span></div>
+      </div>
+
+      <div class="sblock">
+        <h3>Navegación <span class="hint">EDITA</span></h3>
+        <div class="nav" aria-label="Navegación">
+          <a href="#resumen"><span class="dot" aria-hidden="true"></span> Resumen <span class="go">›</span></a>
+          <a href="#experiencia"><span class="dot" aria-hidden="true"></span> Experiencia <span class="go">›</span></a>
+          <a href="#formacion"><span class="dot" aria-hidden="true"></span> Formación <span class="go">›</span></a>
+          <a href="#cursos"><span class="dot" aria-hidden="true"></span> Cursos <span class="go">›</span></a>
+          <a href="#habilidades"><span class="dot" aria-hidden="true"></span> Habilidades <span class="go">›</span></a>
+          <a href="#idiomas"><span class="dot" aria-hidden="true"></span> Idiomas <span class="go">›</span></a>
+          <a href="#proyectos"><span class="dot" aria-hidden="true"></span> Proyectos <span class="go">›</span></a>
+          <a href="#extras"><span class="dot" aria-hidden="true"></span> Extras <span class="go">›</span></a>
+        </div>
+      </div>
+
+      <div class="sblock">
+        <h3>Datos adicionales <span class="hint">EDITA</span></h3>
+        <!-- EDITA: extras -->
+        <div class="kv"><span class="k">Permiso</span><span class="v">B + vehículo propio</span></div>
+        <div class="kv"><span class="k">Horario</span><span class="v">Jornada completa</span></div>
+        <div class="kv"><span class="k">Disponibilidad</span><span class="v">Incorporación inmediata</span></div>
+      </div>
+
+    </aside>
+
+    <!-- =====================================================================================
+      MAIN CONTENT
+    ====================================================================================== -->
+    <main id="contenido">
+      <div class="wrap">
+
+        <!-- Barra sticky superior en el contenido -->
+        <div class="topbar" aria-label="Acciones">
+          <div class="brand">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <strong>CV Online</strong>
+              <span>Diseño premium · RRHH-friendly</span>
+            </div>
           </div>
 
-          <h1 class="pname">Reynaldo Galvizu Sánchez</h1>
-
-          <!-- EDITA: título profesional principal -->
-          <div class="ptitle">
-            Técnico de mantenimiento de ascensores · Estudiante de Ingeniería Informática (UOC)
-          </div>
-
-          <div class="social" aria-label="Accesos rápidos">
-            <!-- EDITA: enlaces -->
-            <a class="pill" href="https://linkedin.com/in/reynaldogs" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a class="pill" href="mailto:reynaldo.gs@hotmail.com">Email</a>
-            <a class="pill" href="tel:636810146">Teléfono</a>
-          </div>
-
-          <div class="mini" aria-label="Datos de contacto">
-            <!-- EDITA: datos -->
-            <div><span class="k">Teléfono</span><span class="v">636 810 146</span></div>
-            <a href="mailto:reynaldo.gs@hotmail.com"><span class="k">Email</span><span class="v">reynaldo.gs@hotmail.com</span></a>
-            <a href="https://linkedin.com/in/reynaldogs" target="_blank" rel="noreferrer"><span class="k">LinkedIn</span><span class="v">linkedin.com/in/reynaldogs</span></a>
-            <div><span class="k">Nacimiento</span><span class="v">12/03/1992</span></div>
+          <div class="actions">
+            <!-- EDITA: si vas a subir un PDF a tu repo, pon el nombre aquí -->
+            <a class="btn primary" href="cv_reynaldo.pdf" download>Descargar PDF</a>
+            <a class="btn" href="mailto:reynaldo.gs@hotmail.com">Contactar</a>
           </div>
         </div>
-      </aside>
 
-      <section class="panel" aria-label="Presentación">
-        <h2 class="hello">Hola, soy <span>Reynaldo</span>.</h2>
+        <!-- =================================================================================
+          RESUMEN (HERO)
+        ================================================================================== -->
+        <section class="section" id="resumen" aria-label="Resumen">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Resumen</h2>
+                <span class="badge">One-page · Portfolio CV</span>
+              </div>
 
-        <!-- EDITA: texto de presentación -->
-        <p class="subline">
-          Técnico de mantenimiento de ascensores con experiencia en Orona y Eninter. Actualmente cursando Grado en Ingeniería Informática en la UOC, con base previa en Ingeniería Eléctrica. Perfil polivalente con experiencia en seguridad, logística y atención al cliente. Orientado a la seguridad, la resolución de incidencias y el trabajo en equipo.
-        </p>
+              <!-- EDITA: TITULAR GRANDE -->
+              <h3 class="heroTitle">Hola, soy <span>Reynaldo</span>.</h3>
 
-        <div class="tabs" aria-label="Pestañas">
-          <input type="radio" name="tabs" id="tab-resumen" checked>
-          <input type="radio" name="tabs" id="tab-cv">
-          <input type="radio" name="tabs" id="tab-contacto">
+              <!-- EDITA: PERFIL -->
+              <p class="lead">
+                Técnico de mantenimiento de ascensores con experiencia en Orona y Eninter.
+                Actualmente cursando Grado en Ingeniería Informática en la UOC, con base previa en Ingeniería Eléctrica.
+                Perfil polivalente con experiencia en seguridad, logística y atención al cliente.
+                Orientado a la seguridad, la resolución de incidencias y el trabajo en equipo.
+              </p>
 
-          <div class="labels">
-            <label for="tab-resumen">Lo esencial</label>
-            <label for="tab-cv">CV rápido</label>
-            <label for="tab-contacto">Contacto</label>
-          </div>
+              <div class="heroBtns">
+                <!-- EDITA: enlaces -->
+                <a class="ctaBtn primary" href="#experiencia">Ver experiencia</a>
+                <a class="ctaBtn" href="#formacion">Ver formación</a>
+                <a class="ctaBtn" href="mailto:reynaldo.gs@hotmail.com">Escríbeme</a>
+              </div>
 
-          <div class="panels">
-            <div class="p" id="p-resumen">
-              <!-- EDITA: 3-5 puntos potentes para RRHH -->
-              <ul style="margin: 10px 0 0; padding-left: 18px; line-height: 1.7;">
-                <li>Experiencia en mantenimiento y resolución de incidencias en ascensores.</li>
-                <li>Foco en seguridad, calidad de servicio y trato con cliente.</li>
-                <li>Formación técnica + estudios universitarios (UOC).</li>
-                <li>Disponibilidad: jornada completa e incorporación inmediata.</li>
-              </ul>
-            </div>
-
-            <div class="p" id="p-cv">
-              <div style="display:grid; gap:10px; margin-top: 10px;">
-                <div class="item">
-                  <div class="item__main">
-                    <div class="item__title">Experiencia reciente</div>
-                    <div class="item__sub">Orona (2022-2025) · Eninter (2020-2021)</div>
-                  </div>
-                  <div class="item__when">Ascensores</div>
+              <div class="heroGrid">
+                <div class="card">
+                  <strong>Áreas clave</strong>
+                  <p>Mantenimiento y reparación · Seguridad y prevención · Resolución de incidencias · Atención al cliente</p>
                 </div>
-                <div class="item">
-                  <div class="item__main">
-                    <div class="item__title">Estudios</div>
-                    <div class="item__sub">Ingeniería Informática (UOC) · ACTIC (nivel medio)</div>
-                  </div>
-                  <div class="item__when">2023-2024</div>
+                <div class="card">
+                  <strong>Herramientas</strong>
+                  <p>Microsoft Office · AutoCAD</p>
                 </div>
               </div>
-            </div>
 
-            <div class="p" id="p-contacto">
-              <p style="margin: 10px 0 0; color: var(--muted); line-height: 1.7;">
-                Si quieres hablar conmigo, puedes escribirme por email o LinkedIn.
+              <!-- EDITA: añade aquí un mini “logro” si quieres (opcional) -->
+              <p class="lead" style="margin-top:14px;">
+                <b>Tip RRHH:</b> si quieres subir el nivel, añade 2–3 logros medibles (tiempos de resolución, calidad, seguridad, etc.).
               </p>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="quick" aria-label="Acciones">
-          <a href="#experiencia"><span class="dot2" aria-hidden="true"></span> Ver experiencia</a>
-          <a href="#formacion"><span class="dot2" aria-hidden="true"></span> Ver formación</a>
-          <a href="mailto:reynaldo.gs@hotmail.com"><span class="dot2" aria-hidden="true"></span> Contactar</a>
-        </div>
-      </section>
-    </div>
+        <!-- =================================================================================
+          EXPERIENCIA
+        ================================================================================== -->
+        <section class="section" id="experiencia" aria-label="Experiencia">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Experiencia</h2>
+                <span class="badge">Cronológica</span>
+              </div>
 
-    <!-- ... (el resto del contenido: experiencia, formación, habilidades, etc.) ... -->
+              <p class="lead">Puedes abrir cada bloque para ajustar funciones, contexto y logros (sin JS).</p>
+
+              <div class="timeline">
+
+                <!-- ==========================
+                  EDITA: EXPERIENCIA 1
+                =========================== -->
+                <details class="exp" open>
+                  <summary>
+                    <div>
+                      <div class="role">Técnico de mantenimiento de ascensores</div>
+                      <div class="meta"><b>Orona S.COOP</b> · Enero 2022 — Marzo 2025</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <!-- EDITA: bullets (sin inventar métricas si no las tienes) -->
+                      <li>Mantenimiento preventivo y correctivo de ascensores.</li>
+                      <li>Diagnóstico y resolución de incidencias priorizando seguridad y continuidad de servicio.</li>
+                      <li>Verificaciones y cumplimiento de procedimientos de seguridad y calidad.</li>
+                      <li>Comunicación con cliente y coordinación de intervenciones.</li>
+                    </ul>
+                    <p class="note"><b>EDITA:</b> aquí puedes añadir marcas/modelos, protocolos, zonas, tipo de clientes, etc.</p>
+                  </div>
+                </details>
+
+                <!-- ==========================
+                  EDITA: EXPERIENCIA 2
+                =========================== -->
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Técnico de mantenimiento de ascensores</div>
+                      <div class="meta"><b>Ascensores Eninter, S.L.</b> · Septiembre 2020 — Diciembre 2021</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Mantenimiento y reparación de equipos de elevación.</li>
+                      <li>Soporte en incidencias y revisiones de seguridad.</li>
+                      <li>Atención a avisos y coordinación con el equipo.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <!-- ==========================
+                  EDITA: EXPERIENCIA 3
+                =========================== -->
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Vigilante de seguridad</div>
+                      <div class="meta"><b>Phoenix Vigilancia y Seguridad, S.A.</b> · Enero 2020 — Abril 2021</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Control de accesos, rondas y soporte operativo.</li>
+                      <li>Atención al público y reporte de incidencias.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Vigilante de seguridad</div>
+                      <div class="meta"><b>Prosegur, S.L.</b> · Noviembre 2019 — Enero 2020</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Servicios de seguridad y control en instalaciones.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Jefe de obra</div>
+                      <div class="meta"><b>Lagupras, S.L.</b> · Enero 2019 — Abril 2019</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Coordinación de tareas y apoyo en planificación/seguimiento.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Ingeniero eléctrico</div>
+                      <div class="meta"><b>SyG, S.A.</b> · Octubre 2018 — Diciembre 2018</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Apoyo técnico y tareas relacionadas con ingeniería eléctrica.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Mozo de almacén</div>
+                      <div class="meta"><b>Mercadona, S.A.</b> · Junio 2016 — Junio 2018</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Operaciones de almacén: preparación, reposición y soporte logístico.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Dependiente</div>
+                      <div class="meta"><b>Grupo Cortefiel, S.A.</b> · Octubre 2015 — Mayo 2016</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Atención al cliente y apoyo en gestión de tienda.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Socorrista</div>
+                      <div class="meta"><b>Altesport 2000, S.L.</b> · Junio 2014 — Septiembre 2015</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Vigilancia y seguridad en instalaciones acuáticas.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Vendedor</div>
+                      <div class="meta"><b>Decathlon España, S.A.U.</b> · Octubre 2013 — Enero 2014</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Atención al cliente y venta asesorada.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Socorrista</div>
+                      <div class="meta"><b>Servitur Salvament, S.L.</b> · Mayo 2013 — Septiembre 2013</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Servicios de salvamento y prevención en instalaciones acuáticas.</li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="exp">
+                  <summary>
+                    <div>
+                      <div class="role">Cajero</div>
+                      <div class="meta"><b>McDonald's, S.L.</b> · Julio 2008 — Septiembre 2012</div>
+                    </div>
+                    <div class="chev">⌄</div>
+                  </summary>
+                  <div class="body">
+                    <ul>
+                      <li>Atención al cliente y caja.</li>
+                    </ul>
+                  </div>
+                </details>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================================
+          FORMACIÓN
+        ================================================================================== -->
+        <section class="section" id="formacion" aria-label="Formación académica">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Formación académica</h2>
+                <span class="badge">Estudios</span>
+              </div>
+
+              <div class="list">
+                <!-- EDITA: item -->
+                <div class="li">
+                  <div>
+                    <strong>Grado en Ingeniería Informática</strong>
+                    <div class="sub">Universitat Oberta de Catalunya (UOC)</div>
+                  </div>
+                  <div class="when">2023 — Actualidad</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>IMAQ0110 · Certificado de profesionalidad</strong>
+                    <div class="sub">Instalación y mantenimiento de ascensores y equipos de elevación y transporte</div>
+                  </div>
+                  <div class="when">2020</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>Grado en Ingeniería Eléctrica (4º curso)</strong>
+                    <div class="sub">Universitat Rovira i Virgili</div>
+                  </div>
+                  <div class="when">2015 — 2019</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <!-- ✅ Lo que me pediste explícitamente -->
+                    <strong>ACREDITACIÓN DE COMPETENCIAS EN TECNOLOGÍAS DE LA INFORMACIÓN Y LA COMUNICACIÓN (ACTIC)</strong>
+                    <div class="sub">Nivel medio · Expedido por la UOC</div>
+                  </div>
+                  <div class="when">2024</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>4º de Inglés</strong>
+                    <div class="sub">Escuela Oficial de Idiomas</div>
+                  </div>
+                  <div class="when">2017</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>Bachillerato Tecnológico</strong>
+                    <div class="sub">IES Ramón Barbat</div>
+                  </div>
+                  <div class="when">2008 — 2010</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>ESO</strong>
+                    <div class="sub">IES Ramón Barbat</div>
+                  </div>
+                  <div class="when">2004 — 2008</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================================
+          CURSOS / ACREDITACIONES
+        ================================================================================== -->
+        <section class="section" id="cursos" aria-label="Cursos y acreditaciones">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Cursos y acreditaciones</h2>
+                <span class="badge">Formación complementaria</span>
+              </div>
+
+              <div class="list">
+                <div class="li">
+                  <div>
+                    <strong>Curso AEQT / AEST (16h.)</strong>
+                    <div class="sub">SP Activa</div>
+                  </div>
+                  <div class="when">Enero 2019</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>Curso Rayos X - Escáner (10h.)</strong>
+                    <div class="sub">Sias Formación</div>
+                  </div>
+                  <div class="when">Septiembre 2016</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>Habilitación Vigilante de Seguridad</strong>
+                    <div class="sub">Conv.</div>
+                  </div>
+                  <div class="when">Febrero 2016</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>Socorrismo en piscinas e instalaciones acuáticas (100h.)</strong>
+                    <div class="sub">Aunar</div>
+                  </div>
+                  <div class="when">Mayo 2013</div>
+                </div>
+              </div>
+
+              <p class="lead" style="margin-top:14px;">
+                <b>EDITA:</b> si tienes más cursos técnicos (PRL, electricidad, rescate, normativa), añádelos aquí: queda muy bien a RRHH.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================================
+          HABILIDADES
+        ================================================================================== -->
+        <section class="section" id="habilidades" aria-label="Habilidades">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Habilidades</h2>
+                <span class="badge">Nivel orientativo</span>
+              </div>
+
+              <p class="lead">EDITA: ajusta los porcentajes si quieres (son visuales).</p>
+
+              <div class="skills">
+                <div class="skill">
+                  <div class="skillTop"><strong>Mantenimiento y reparación</strong><span>Alto</span></div>
+                  <div class="bar"><i style="--p: 90%"></i></div>
+                </div>
+
+                <div class="skill">
+                  <div class="skillTop"><strong>Seguridad y prevención</strong><span>Alto</span></div>
+                  <div class="bar"><i style="--p: 85%"></i></div>
+                </div>
+
+                <div class="skill">
+                  <div class="skillTop"><strong>Resolución de incidencias</strong><span>Alto</span></div>
+                  <div class="bar"><i style="--p: 88%"></i></div>
+                </div>
+
+                <div class="skill">
+                  <div class="skillTop"><strong>Microsoft Office</strong><span>Medio</span></div>
+                  <div class="bar"><i style="--p: 70%"></i></div>
+                </div>
+
+                <div class="skill">
+                  <div class="skillTop"><strong>AutoCAD</strong><span>Medio</span></div>
+                  <div class="bar"><i style="--p: 65%"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================================
+          IDIOMAS
+        ================================================================================== -->
+        <section class="section" id="idiomas" aria-label="Idiomas">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Idiomas</h2>
+                <span class="badge">Comunicación</span>
+              </div>
+
+              <div class="list">
+                <div class="li">
+                  <div>
+                    <strong>Castellano</strong>
+                    <div class="sub">Nativo</div>
+                  </div>
+                  <div class="when">✔</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>Catalán</strong>
+                    <div class="sub">Nivel alto</div>
+                  </div>
+                  <div class="when">✔</div>
+                </div>
+
+                <div class="li">
+                  <div>
+                    <strong>Inglés</strong>
+                    <div class="sub">EDITA: indica tu nivel real (A2/B1/B2/C1). En el CV consta formación (EOI 4º).</div>
+                  </div>
+                  <div class="when">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================================
+          PROYECTOS (OPCIONAL - queda MUY BIEN en GitHub)
+          - Si no lo quieres: borra esta sección completa.
+        ================================================================================== -->
+        <section class="section" id="proyectos" aria-label="Proyectos">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Proyectos</h2>
+                <span class="badge">Opcional (GitHub)</span>
+              </div>
+
+              <p class="lead">
+                Esto te sube muchísimo el nivel para RRHH cuando lo publicas en GitHub Pages.
+                EDITA: añade 2–4 proyectos (aunque sean pequeños): automatizaciones, web, scripts, etc.
+              </p>
+
+              <div class="masonry" aria-label="Listado de proyectos">
+
+                <article class="project">
+                  <h3>Proyecto 1 · Nombre</h3>
+                  <p>Descripción breve: problema → solución → impacto. (Sin métricas inventadas).</p>
+                  <div class="plinks">
+                    <a class="plink" href="#" target="_blank" rel="noreferrer">Demo</a>
+                    <a class="plink" href="#" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+
+                <article class="project">
+                  <h3>Proyecto 2 · Nombre</h3>
+                  <p>Tecnologías: HTML/CSS · Python · etc. Explica qué aprendiste o mejoraste.</p>
+                  <div class="plinks">
+                    <a class="plink" href="#" target="_blank" rel="noreferrer">Repositorio</a>
+                  </div>
+                </article>
+
+                <article class="project">
+                  <h3>Proyecto 3 · Nombre</h3>
+                  <p>Algo que te represente. Aunque sea pequeño, demuestra iniciativa y criterio.</p>
+                  <div class="plinks">
+                    <a class="plink" href="#" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================================
+          EXTRAS
+        ================================================================================== -->
+        <section class="section" id="extras" aria-label="Extras">
+          <div class="sheet">
+            <div class="pad">
+              <div class="secHead">
+                <h2>Extras</h2>
+                <span class="badge">Detalles</span>
+              </div>
+
+              <div class="list">
+                <div class="li">
+                  <div>
+                    <strong>Permiso de conducción</strong>
+                    <div class="sub">B + vehículo propio</div>
+                  </div>
+                  <div class="when">✔</div>
+                </div>
+                <div class="li">
+                  <div>
+                    <strong>Disponibilidad</strong>
+                    <div class="sub">Jornada completa · Incorporación inmediata</div>
+                  </div>
+                  <div class="when">Ahora</div>
+                </div>
+              </div>
+
+              <p class="lead" style="margin-top:14px;">
+                <b>EDITA:</b> si tienes disponibilidad para guardias, turnos o movilidad, ponlo aquí (RRHH lo valora).
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <footer>CV Online · HTML + CSS · Reynaldo Galvizu Sánchez</footer>
+
+      </div>
+    </main>
   </div>
 </body>
 </html>
