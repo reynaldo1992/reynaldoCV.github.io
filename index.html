@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CV Online — Tu Nombre</title>
+
+  <!--
+    ✅ EDITA: busca "TU NOMBRE", "tu@email.com", enlaces y textos de ejemplo.
+    ✅ FOTO: cambia el src del avatar (puedes usar una imagen local: ./foto.jpg)
+  -->
+
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 15% 10%, rgba(130, 87, 229, .35), transparent 60%),
+                  radial-gradient(900px 700px at 85% 20%, rgba(0, 255, 204, .22), transparent 55%),
+                  radial-gradient(1000px 800px at 50% 90%, rgba(255, 92, 168, .22), transparent 60%),
+                  var(--bg);
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    :root{
+      --bg: #070A12;
+      --card: rgba(255,255,255,.08);
+      --card-strong: rgba(255,255,255,.12);
+      --stroke: rgba(255,255,255,.16);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+      --radius: 20px;
+      --radius2: 28px;
+      --pad: clamp(16px, 2.2vw, 22px);
+      --w: 1100px;
+      --accent1: #00ffd5;
+      --accent2: #ff5ca8;
+      --accent3: #8257e5;
+      --accent4: #ffcc66;
+    }
+
+    /* ========== BACKGROUND BLOBS (CSS-only “dinámico”) ========== */
+    .blobs::before, .blobs::after{
+      content:"";
+      position: fixed;
+      inset: -20vmax;
+      z-index: -1;
+      filter: blur(55px);
+      opacity: .45;
+      transform: translate3d(0,0,0);
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+    .blobs::before{
+      background:
+        radial-gradient(circle at 20% 35%, rgba(0,255,213,.60), transparent 55%),
+        radial-gradient(circle at 70% 25%, rgba(130,87,229,.62), transparent 55%),
+        radial-gradient(circle at 60% 70%, rgba(255,92,168,.55), transparent 55%);
+    }
+    .blobs::after{
+      opacity: .35;
+      animation-duration: 18s;
+      background:
+        radial-gradient(circle at 30% 75%, rgba(255,204,102,.55), transparent 50%),
+        radial-gradient(circle at 85% 70%, rgba(0,255,213,.45), transparent 52%),
+        radial-gradient(circle at 55% 20%, rgba(255,92,168,.42), transparent 55%);
+    }
+
+    @keyframes drift{
+      0%   { transform: translate(-2%, -1%) scale(1.02); }
+      50%  { transform: translate(2%, 2%) scale(1.06); }
+      100% { transform: translate(4%, -2%) scale(1.08); }
+    }
+
+    /* Respeta accesibilidad */
+    @media (prefers-reduced-motion: reduce){
+      html { scroll-behavior: auto; }
+      .blobs::before, .blobs::after, .shine, .pulse, .skills .bar > span { animation: none !important; }
+      * { transition-duration: 0.001ms !important; }
+    }
+
+    /* ========== LAYOUT ========== */
+    .wrap{
+      width: min(var(--w), calc(100% - 2*clamp(16px, 4vw, 28px)));
+      margin: 0 auto;
+      padding: clamp(18px, 3vw, 28px) 0 80px;
+    }
+
+    header{
+      position: sticky;
+      top: 10px;
+      z-index: 30;
+      margin: 10px 0 22px;
+    }
+
+    .topbar{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 22px rgba(0,0,0,.25);
+    }
+
+    .brand{
+      display: flex; align-items: center; gap: 10px; min-width: 180px;
+      padding-left: 6px;
+    }
+    .dot{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: conic-gradient(from 90deg, var(--accent1), var(--accent3), var(--accent2), var(--accent4), var(--accent1));
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+    }
+    .brand strong{ font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .brand span{ display:block; font-size: 12px; color: var(--muted2); margin-top: 2px; }
+
+    nav{
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      justify-content: center;
+    }
+    nav a{
+      font-size: 13px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+    }
+    nav a:hover{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.16);
+      transform: translateY(-1px);
+      color: rgba(255,255,255,.92);
+    }
+
+    .actions{
+      display: flex; align-items: center; gap: 10px;
+      min-width: 180px; justify-content: flex-end;
+    }
+
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.86);
+      font-size: 13px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,.18);
+      white-space: nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
+    }
+    .btn.primary{
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(0,255,213,.18), rgba(130,87,229,.18), rgba(255,92,168,.18));
+      position: relative;
+      overflow: hidden;
+    }
+    .btn.primary::before{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.35), transparent 45%);
+      transform: rotate(20deg);
+      opacity: .35;
+      animation: shine 4.2s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%{ transform: translateX(-6%) rotate(20deg); opacity: .20; }
+      50%{ transform: translateX(6%) rotate(20deg); opacity: .40; }
+      100%{ transform: translateX(-6%) rotate(20deg); opacity: .20; }
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: clamp(14px, 2.4vw, 20px);
+      align-items: start;
+    }
+
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand, .actions{ min-width: auto; }
+      header{ top: 8px; }
+      .topbar{ border-radius: 18px; padding: 12px; }
+      nav{ justify-content: flex-start; }
+    }
+
+    /* ========== CARDS ========== */
+    .card{
+      border-radius: var(--radius2);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .card .inner{
+      padding: var(--pad);
+    }
+    .card + .card{ margin-top: clamp(14px, 2.4vw, 20px); }
+
+    .title{
+      display:flex; align-items:flex-end; justify-content: space-between; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .title h2{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.88);
+    }
+    .badge{
+      font-size: 12px;
+      color: rgba(255,255,255,.85);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+
+    /* ========== HERO ========== */
+    .hero{
+      padding: 0;
+    }
+    .hero .inner{
+      padding: clamp(18px, 3vw, 26px);
+    }
+    .hero-top{
+      display:flex;
+      gap: clamp(14px, 2.4vw, 20px);
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .who{
+      display:flex; align-items:center; gap: 14px; flex-wrap: wrap;
+    }
+    .avatar{
+      width: 78px; height: 78px; border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      overflow: hidden;
+      box-shadow: 0 10px 26px rgba(0,0,0,.28);
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .avatar::after{
+      content:"";
+      position:absolute; inset:-30%;
+      background: conic-gradient(from 180deg, rgba(0,255,213,.35), rgba(130,87,229,.35), rgba(255,92,168,.35), rgba(255,204,102,.35), rgba(0,255,213,.35));
+      filter: blur(18px);
+      opacity: .35;
+      animation: drift 10s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    .avatar img{ width:100%; height:100%; object-fit: cover; position: relative; z-index: 1; }
+
+    .nameblock h1{
+      margin: 0;
+      font-size: clamp(28px, 3.6vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .role{
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      display:flex; gap: 10px; flex-wrap: wrap; align-items:center;
+    }
+    .role .pill{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      font-size: 12px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .hero-desc{
+      margin-top: 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    .hero-cta{
+      display:flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;
+    }
+
+    .spark{
+      position:absolute;
+      inset: 0;
+      pointer-events:none;
+      opacity:.55;
+      background:
+        radial-gradient(800px 350px at 20% 10%, rgba(0,255,213,.22), transparent 55%),
+        radial-gradient(700px 360px at 80% 0%, rgba(255,92,168,.18), transparent 55%),
+        radial-gradient(800px 450px at 50% 100%, rgba(130,87,229,.20), transparent 60%);
+    }
+
+    /* ========== LIST / META ========== */
+    .meta{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    @media (max-width: 520px){
+      .meta{ grid-template-columns: 1fr; }
+    }
+    .meta a, .meta div{
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 10px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .meta a:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.18);
+    }
+    .k{ color: var(--muted2); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+    .v{ color: rgba(255,255,255,.88); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* ========== SECTION CONTENT ========== */
+    .text{ color: var(--muted); line-height: 1.7; font-size: 14px; }
+    .small{ font-size: 12px; color: var(--muted2); }
+
+    /* ========== TIMELINE (EXPERIENCIA) ========== */
+    .timeline{
+      margin-top: 10px;
+      display: grid;
+      gap: 12px;
+    }
+    details.job{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    details.job:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.18);
+    }
+    details.job summary{
+      cursor: pointer;
+      list-style: none;
+      padding: 14px 14px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    details.job summary::-webkit-details-marker{ display:none; }
+    .job-left{
+      display:flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .job-title{
+      font-weight: 650;
+      color: rgba(255,255,255,.90);
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .job-meta{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .job-right{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+    .tag{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      font-size: 12px;
+      color: rgba(255,255,255,.82);
+    }
+    .chev{
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display:grid; place-items:center;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      transition: transform .2s ease;
+      color: rgba(255,255,255,.84);
+    }
+    details[open] .chev{ transform: rotate(180deg); }
+    .job-body{
+      padding: 0 14px 14px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .job-body ul{
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* ========== SKILLS ========== */
+    .skills{
+      display:grid;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .skill{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 12px;
+    }
+    .skill .row{
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .skill .row strong{
+      font-size: 14px; color: rgba(255,255,255,.90);
+    }
+    .skill .row span{
+      font-size: 12px; color: var(--muted);
+    }
+    .bar{
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      overflow: hidden;
+    }
+    .bar > span{
+      display:block;
+      height: 100%;
+      width: var(--p, 50%);
+      background: linear-gradient(90deg, rgba(0,255,213,.65), rgba(130,87,229,.60), rgba(255,92,168,.60));
+      border-radius: 999px;
+      animation: fill 1.2s ease-out both;
+    }
+    @keyframes fill{
+      from { width: 0%; filter: saturate(1.2); }
+      to   { width: var(--p, 50%); }
+    }
+
+    /* ========== PROJECTS ========== */
+    .cards{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 640px){
+      .cards{ grid-template-columns: 1fr; }
+    }
+    .p-card{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 14px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+    }
+    .p-card::before{
+      content:"";
+      position:absolute; inset:-80px;
+      background: radial-gradient(circle at 25% 25%, rgba(0,255,213,.18), transparent 55%),
+                  radial-gradient(circle at 75% 20%, rgba(255,92,168,.14), transparent 60%),
+                  radial-gradient(circle at 65% 85%, rgba(130,87,229,.16), transparent 55%);
+      opacity: .65;
+      filter: blur(20px);
+      transform: translate3d(0,0,0);
+      transition: opacity .18s ease;
+      pointer-events:none;
+    }
+    .p-card:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.18);
+    }
+    .p-card:hover::before{ opacity: .90; }
+    .p-card h3{
+      margin: 0 0 6px;
+      font-size: 15px;
+      color: rgba(255,255,255,.92);
+      position: relative;
+      z-index: 1;
+    }
+    .p-card p{
+      margin: 0 0 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
+      position: relative;
+      z-index: 1;
+    }
+    .p-links{
+      display:flex; gap: 10px; flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .p-links a{
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.86);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .p-links a:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    /* ========== EDUCATION / CERTS ========== */
+    .list{
+      margin-top: 10px;
+      display:grid;
+      gap: 10px;
+    }
+    .li{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 12px 14px;
+      display:flex; align-items:flex-start; justify-content: space-between; gap: 12px;
+    }
+    .li strong{ color: rgba(255,255,255,.92); font-size: 14px; }
+    .li .sub{ color: var(--muted); font-size: 13px; margin-top: 4px; line-height: 1.5; }
+    .li .when{ color: var(--muted2); font-size: 12px; white-space: nowrap; }
+
+    /* ========== SIDE: CONTACT / HIGHLIGHTS ========== */
+    .side .pillbox{
+      display:flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;
+    }
+    .pillbox .chip{
+      font-size: 12px;
+      color: rgba(255,255,255,.84);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .pillbox .chip:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .footer{
+      margin-top: 18px;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      text-align: center;
+      padding: 18px 10px;
+      opacity: .9;
+    }
+
+    /* ========== PRINT (por si lo imprimes como PDF) ========== */
+    @media print{
+      body{ background: #fff; color:#111; }
+      .blobs::before, .blobs::after, header{ display:none !important; }
+      .card{ box-shadow: none; background: #fff; border: 1px solid #ddd; }
+      .text, .muted, .small, .job-meta, .li .sub { color:#333 !important; }
+      .btn, .tag, .badge, .chip, .p-links a{ border: 1px solid #ccc; background: #f4f4f4; color:#111; }
+      a{ text-decoration: none; }
+    }
+
+    /* ========== LITTLE ICONS (CSS-only) ========== */
+    .ico{
+      width: 18px; height: 18px;
+      display:inline-block;
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(0,255,213,.35), rgba(130,87,229,.35), rgba(255,92,168,.35));
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 8px 18px rgba(0,0,0,.20);
+      flex: 0 0 auto;
+    }
+
+    /* ========== SECTION ANCHOR OFFSET ========== */
+    section{ scroll-margin-top: 90px; }
+  </style>
+</head>
+
+<body class="blobs">
+  <div class="wrap">
+    <header>
+      <div class="topbar">
+        <div class="brand">
+          <span class="dot" aria-hidden="true"></span>
+          <div>
+            <strong>TU NOMBRE</strong>
+            <span>CV Online · Portfolio · Contacto</span>
+          </div>
+        </div>
+
+        <nav aria-label="Navegación">
+          <a href="#sobre-mi">Sobre mí</a>
+          <a href="#experiencia">Experiencia</a>
+          <a href="#proyectos">Proyectos</a>
+          <a href="#habilidades">Habilidades</a>
+          <a href="#formacion">Formación</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn" href="#contacto" title="Ir a contacto">
+            <span class="ico" aria-hidden="true"></span>
+            Hablemos
+          </a>
+          <a class="btn primary" href="mailto:tu@email.com" title="Enviar email">
+            <span class="ico" aria-hidden="true"></span>
+            Email
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- ====== COLUMNA PRINCIPAL ====== -->
+      <main>
+        <!-- HERO -->
+        <section class="card hero" id="sobre-mi" aria-label="Presentación">
+          <div class="spark" aria-hidden="true"></div>
+          <div class="inner">
+            <div class="hero-top">
+              <div class="who">
+                <div class="avatar" aria-label="Foto de perfil">
+                  <!-- Cambia este src -->
+                  <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=320&q=80" alt="Foto de TU NOMBRE" />
+                </div>
+
+                <div class="nameblock">
+                  <h1>TU NOMBRE</h1>
+                  <div class="role">
+                    <span class="pill">Rol / Especialidad</span>
+                    <span class="pill">Ciudad, País</span>
+                    <span class="pill">Disponible · Freelance / Jornada</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-cta" aria-label="Acciones rápidas">
+                <a class="btn primary" href="#proyectos">
+                  <span class="ico" aria-hidden="true"></span>
+                  Ver proyectos
+                </a>
+                <a class="btn" href="#experiencia">
+                  <span class="ico" aria-hidden="true"></span>
+                  Experiencia
+                </a>
+              </div>
+            </div>
+
+            <p class="hero-desc">
+              Soy <strong>tu profesión</strong> con foco en <strong>tus puntos fuertes</strong>. Me gusta construir cosas
+              que se vean bien, funcionen rápido y sean fáciles de usar. Busco un equipo/proyecto donde aportar
+              <strong>impacto real</strong> y seguir creciendo.
+            </p>
+
+            <div class="meta" aria-label="Datos rápidos">
+              <a href="mailto:tu@email.com">
+                <span class="k">Email</span>
+                <span class="v">tu@email.com</span>
+              </a>
+              <a href="tel:+34000000000">
+                <span class="k">Teléfono</span>
+                <span class="v">+34 000 000 000</span>
+              </a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+                <span class="k">LinkedIn</span>
+                <span class="v">linkedin.com/in/tuusuario</span>
+              </a>
+              <a href="https://github.com/" target="_blank" rel="noreferrer">
+                <span class="k">GitHub</span>
+                <span class="v">github.com/tuusuario</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- EXPERIENCIA -->
+        <section class="card" id="experiencia" aria-label="Experiencia">
+          <div class="inner">
+            <div class="title">
+              <h2>Experiencia</h2>
+              <span class="badge">Últimos años</span>
+            </div>
+            <p class="text">
+              Aquí tienes mi recorrido profesional. (Abre cada bloque para ver logros, tecnologías y resultados).
+            </p>
+
+            <div class="timeline">
+              <details class="job" open>
+                <summary>
+                  <div class="job-left">
+                    <div class="job-title">Puesto · Empresa</div>
+                    <div class="job-meta">
+                      <span>2024 — Actualidad</span>
+                      <span>·</span>
+                      <span>Remoto / Presencial</span>
+                      <span>·</span>
+                      <span>Ciudad</span>
+                    </div>
+                  </div>
+                  <div class="job-right">
+                    <span class="tag">Impacto</span>
+                    <span class="chev" aria-hidden="true">⌄</span>
+                  </div>
+                </summary>
+                <div class="job-body">
+                  <ul>
+                    <li>Logro cuantificable: aumenté X% / reduje Y% / mejoré Z.</li>
+                    <li>Responsabilidad clave: diseñé / desarrollé / lideré / optimicé.</li>
+                    <li>Tecnologías: HTML, CSS, (añade tus stacks).</li>
+                  </ul>
+                </div>
+              </details>
+
+              <details class="job">
+                <summary>
+                  <div class="job-left">
+                    <div class="job-title">Puesto · Empresa</div>
+                    <div class="job-meta">
+                      <span>2022 — 2024</span><span>·</span><span>Equipo / Área</span><span>·</span><span>Ciudad</span>
+                    </div>
+                  </div>
+                  <div class="job-right">
+                    <span class="tag">Crecimiento</span>
+                    <span class="chev" aria-hidden="true">⌄</span>
+                  </div>
+                </summary>
+                <div class="job-body">
+                  <ul>
+                    <li>Proyecto destacado: construí X que generó Y.</li>
+                    <li>Mejora: automatización / rendimiento / UX.</li>
+                    <li>Colaboración: trabajo con producto/diseño/QA.</li>
+                  </ul>
+                </div>
+              </details>
+
+              <details class="job">
+                <summary>
+                  <div class="job-left">
+                    <div class="job-title">Puesto · Empresa</div>
+                    <div class="job-meta">
+                      <span>2020 — 2022</span><span>·</span><span>Área</span><span>·</span><span>Ciudad</span>
+                    </div>
+                  </div>
+                  <div class="job-right">
+                    <span class="tag">Base</span>
+                    <span class="chev" aria-hidden="true">⌄</span>
+                  </div>
+                </summary>
+                <div class="job-body">
+                  <ul>
+                    <li>Aprendizaje clave: especialización en X.</li>
+                    <li>Entrega: desarrollo de funcionalidades end-to-end.</li>
+                    <li>Buenas prácticas: accesibilidad, calidad, documentación.</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROYECTOS -->
+        <section class="card" id="proyectos" aria-label="Proyectos">
+          <div class="inner">
+            <div class="title">
+              <h2>Proyectos</h2>
+              <span class="badge">Selección</span>
+            </div>
+            <p class="text">
+              Una muestra de trabajos con enfoque en valor, diseño y ejecución.
+            </p>
+
+            <div class="cards">
+              <article class="p-card">
+                <h3>Proyecto 1 · Nombre</h3>
+                <p>Descripción breve: qué resuelve, para quién y por qué es potente.</p>
+                <div class="p-links">
+                  <a href="#" target="_blank" rel="noreferrer">Demo</a>
+                  <a href="#" target="_blank" rel="noreferrer">Repositorio</a>
+                  <a href="#" target="_blank" rel="noreferrer">Caso de estudio</a>
+                </div>
+              </article>
+
+              <article class="p-card">
+                <h3>Proyecto 2 · Nombre</h3>
+                <p>Qué hiciste tú: rol, impacto, resultados y stack principal.</p>
+                <div class="p-links">
+                  <a href="#" target="_blank" rel="noreferrer">Demo</a>
+                  <a href="#" target="_blank" rel="noreferrer">Repositorio</a>
+                </div>
+              </article>
+
+              <article class="p-card">
+                <h3>Proyecto 3 · Nombre</h3>
+                <p>Algo llamativo: performance, diseño, automatización, escalado, etc.</p>
+                <div class="p-links">
+                  <a href="#" target="_blank" rel="noreferrer">Demo</a>
+                  <a href="#" target="_blank" rel="noreferrer">Repositorio</a>
+                </div>
+              </article>
+
+              <article class="p-card">
+                <h3>Proyecto 4 · Nombre</h3>
+                <p>Pequeña historia: el problema → tu solución → el resultado.</p>
+                <div class="p-links">
+                  <a href="#" target="_blank" rel="noreferrer">Demo</a>
+                  <a href="#" target="_blank" rel="noreferrer">Repositorio</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- HABILIDADES -->
+        <section class="card" id="habilidades" aria-label="Habilidades">
+          <div class="inner">
+            <div class="title">
+              <h2>Habilidades</h2>
+              <span class="badge">Nivel</span>
+            </div>
+            <p class="text">
+              Ajusta los porcentajes a tu nivel real. (Son solo visuales.)
+            </p>
+
+            <div class="skills">
+              <div class="skill">
+                <div class="row">
+                  <strong>HTML + CSS</strong>
+                  <span>Avanzado</span>
+                </div>
+                <div class="bar" aria-label="HTML y CSS 90%">
+                  <span style="--p: 90%"></span>
+                </div>
+              </div>
+
+              <div class="skill">
+                <div class="row">
+                  <strong>Diseño UI / UX</strong>
+                  <span>Medio-Avanzado</span>
+                </div>
+                <div class="bar" aria-label="UI UX 80%">
+                  <span style="--p: 80%"></span>
+                </div>
+              </div>
+
+              <div class="skill">
+                <div class="row">
+                  <strong>Comunicación / Trabajo en equipo</strong>
+                  <span>Muy alto</span>
+                </div>
+                <div class="bar" aria-label="Soft skills 92%">
+                  <span style="--p: 92%"></span>
+                </div>
+              </div>
+
+              <div class="skill">
+                <div class="row">
+                  <strong>Otra habilidad</strong>
+                  <span>Medio</span>
+                </div>
+                <div class="bar" aria-label="Otra habilidad 70%">
+                  <span style="--p: 70%"></span>
+                </div>
+              </div>
+            </div>
+
+            <p class="small" style="margin-top: 12px;">
+              Tip: añade herramientas (Figma, Git, etc.) como chips en la columna derecha.
+            </p>
+          </div>
+        </section>
+
+        <!-- FORMACIÓN -->
+        <section class="card" id="formacion" aria-label="Formación y certificaciones">
+          <div class="inner">
+            <div class="title">
+              <h2>Formación</h2>
+              <span class="badge">Académico</span>
+            </div>
+
+            <div class="list">
+              <div class="li">
+                <div>
+                  <strong>Grado / Ciclo / Bootcamp · Centro</strong>
+                  <div class="sub">Especialidad, mención o enfoque (ej. Desarrollo Web, Datos, etc.)</div>
+                </div>
+                <div class="when">2019 — 2021</div>
+              </div>
+
+              <div class="li">
+                <div>
+                  <strong>Certificación · Plataforma</strong>
+                  <div class="sub">Tema: Frontend / Cloud / Scrum / etc.</div>
+                </div>
+                <div class="when">2023</div>
+              </div>
+
+              <div class="li">
+                <div>
+                  <strong>Curso · Plataforma</strong>
+                  <div class="sub">Algo corto pero relevante para tu perfil.</div>
+                </div>
+                <div class="when">2024</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ====== COLUMNA LATERAL ====== -->
+      <aside class="side">
+        <!-- CONTACTO -->
+        <section class="card" id="contacto" aria-label="Contacto">
+          <div class="inner">
+            <div class="title">
+              <h2>Contacto</h2>
+              <span class="badge">Disponible</span>
+            </div>
+
+            <p class="text">
+              Si te encaja mi perfil, escríbeme y te respondo rápido.
+            </p>
+
+            <div class="meta" style="grid-template-columns: 1fr;">
+              <a href="mailto:tu@email.com">
+                <span class="k">Email</span>
+                <span class="v">tu@email.com</span>
+              </a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+                <span class="k">LinkedIn</span>
+                <span class="v">tuusuario</span>
+              </a>
+              <a href="https://github.com/" target="_blank" rel="noreferrer">
+                <span class="k">GitHub</span>
+                <span class="v">tuusuario</span>
+              </a>
+              <div>
+                <span class="k">Idiomas</span>
+                <span class="v">Español · Inglés (B2/C1)</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn primary" href="mailto:tu@email.com?subject=Contacto%20CV%20Online&body=Hola%20%5BTU%20NOMBRE%5D%2C%0A%0AHe%20visto%20tu%20CV%20y%20me%20gustar%C3%ADa%20hablar%20contigo%20sobre...">
+                <span class="ico" aria-hidden="true"></span>
+                Enviar mensaje
+              </a>
+              <a class="btn" href="#proyectos">
+                <span class="ico" aria-hidden="true"></span>
+                Ver trabajos
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- PERFIL RÁPIDO -->
+        <section class="card" aria-label="Perfil rápido">
+          <div class="inner">
+            <div class="title">
+              <h2>Perfil</h2>
+              <span class="badge">Highlights</span>
+            </div>
+
+            <p class="text">
+              3–5 bullets que te vendan rápido (impacto + enfoque).
+            </p>
+
+            <div class="pillbox" aria-label="Puntos clave">
+              <span class="chip">🚀 Orientado a resultados</span>
+              <span class="chip">🎨 Buen gusto visual</span>
+              <span class="chip">⚡ Performance & detalle</span>
+              <span class="chip">🤝 Trabajo en equipo</span>
+              <span class="chip">🧠 Aprendizaje rápido</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- STACK / HERRAMIENTAS -->
+        <section class="card" aria-label="Herramientas y stack">
+          <div class="inner">
+            <div class="title">
+              <h2>Stack</h2>
+              <span class="badge">Tools</span>
+            </div>
+
+            <p class="text">
+              Añade tus herramientas principales aquí.
+            </p>
+
+            <div class="pillbox">
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+              <span class="chip">Git</span>
+              <span class="chip">Figma</span>
+              <span class="chip">Accesibilidad</span>
+              <span class="chip">Responsive</span>
+            </div>
+
+            <p class="small" style="margin-top: 12px;">
+              Consejo: si quieres “más chulo”, pon aquí también premios, publicaciones o métricas (ej. “+20% conversión”).
+            </p>
+          </div>
+        </section>
+
+        <!-- DISPONIBILIDAD -->
+        <section class="card" aria-label="Disponibilidad">
+          <div class="inner">
+            <div class="title">
+              <h2>Disponibilidad</h2>
+              <span class="badge">2026</span>
+            </div>
+
+            <div class="li" style="margin-top: 10px;">
+              <div>
+                <strong>Tipo de trabajo</strong>
+                <div class="sub">Remoto / Híbrido / Presencial · Jornada completa / Freelance</div>
+              </div>
+              <div class="when">Ahora</div>
+            </div>
+
+            <div class="li" style="margin-top: 10px;">
+              <div>
+                <strong>Preferencias</strong>
+                <div class="sub">Producto, startups, consultoría, etc. (lo que sea tuyo)</div>
+              </div>
+              <div class="when">OK</div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <div class="footer">
+      Hecho con ❤️ en HTML + CSS · Personaliza y publica (GitHub Pages / Netlify / Vercel)
+    </div>
+  </div>
+</body>
+</html>
